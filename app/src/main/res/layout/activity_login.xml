@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8BC34A"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:id="@+id/email_et_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/rounded_edittext_reg_log"
+        android:ems="10"
+        android:hint="Email"
+        android:padding="15dp"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/password_et_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext_reg_log"
+        android:ems="10"
+        android:padding="15dp"
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/email_et_login"
+        app:layout_constraintStart_toStartOf="@+id/email_et_login"
+        app:layout_constraintTop_toBottomOf="@+id/email_et_login" />
+
+    <Button
+        android:id="@+id/login_bt_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="Login"
+        android:background="@drawable/round_image_button"
+        app:layout_constraintEnd_toEndOf="@+id/password_et_login"
+        app:layout_constraintStart_toStartOf="@+id/password_et_login"
+        app:layout_constraintTop_toBottomOf="@+id/password_et_login" />
+
+    <TextView
+        android:id="@+id/backtoRegister_tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="BACK TO REGISTER"
+        android:textColor="#FCFBFB"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/login_bt_login"
+        app:layout_constraintStart_toStartOf="@+id/login_bt_login"
+        app:layout_constraintTop_toBottomOf="@+id/login_bt_login" />
+</androidx.constraintlayout.widget.ConstraintLayout>
