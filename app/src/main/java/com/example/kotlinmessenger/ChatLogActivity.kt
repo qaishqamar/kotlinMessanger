@@ -43,7 +43,9 @@ companion object{
         }
     }
     private fun listenForMessages(){
-        val ref=FirebaseDatabase.getInstance().getReference("/message")
+        val fromId=FirebaseAuth.getInstance().uid
+        val toId=toUser?.uid
+        val ref=FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
         ref.addChildEventListener(object :ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage=p0.getValue(ChatMessage::class.java)
@@ -89,14 +91,23 @@ companion object{
         val text=edittext_chat_log.text.toString()
         if(fromId==null)return
 
-         val reference=FirebaseDatabase.getInstance().getReference("/message").push()
+       //  val reference=FirebaseDatabase.getInstance().getReference("/message").push()
+        val reference=FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+
+        val toReference=FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
         val message=ChatMessage(reference.key!!,toId,text,fromId,System.currentTimeMillis()/1000)
         reference.setValue(message)
             .addOnSuccessListener {
                 Log.d(tag,"message has sent")
+                edittext_chat_log.text.clear()
+                recyclerview_chat_log.scrollToPosition(adapter.itemCount -1)
 
             }
-
+        toReference.setValue(message)
+        val latestMessageRef=FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        latestMessageRef.setValue(message)
+        val latestMessageToRef=FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+         latestMessageToRef.setValue(message)
     }
 
 }
