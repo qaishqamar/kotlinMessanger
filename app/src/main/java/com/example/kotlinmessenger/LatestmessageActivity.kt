@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.kotlinmessenger.Models.ChatMessage
 import com.example.kotlinmessenger.Models.User
+import com.example.kotlinmessenger.NewMessageActivity.Companion.USER_KEY
 import com.example.kotlinmessenger.RegisterLogin.RegistrationActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -27,10 +28,18 @@ class LatestmessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latestmessage)
+        supportActionBar?.title = currentUser?.username
         VerifyUser()
         recyclreView_latestMessage.adapter=adapter
         recyclreView_latestMessage.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
         fetchCurrentUser()
+        adapter.setOnItemClickListener{item, view ->
+            val row=item as LatestMessageRow
+
+            val intent=Intent(this,ChatLogActivity::class.java)
+            intent.putExtra(USER_KEY,row.chatPartnerUser)
+            startActivity(intent)
+        }
        // setDummyData()
         listenForLatestMessage()
     }
@@ -66,36 +75,6 @@ class LatestmessageActivity : AppCompatActivity() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
-    }
-    class LatestMessageRow(val chatMessage: ChatMessage):Item<GroupieViewHolder>(){
-        override fun getLayout(): Int {
-            return R.layout.latestmessage_row
-        }
-
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-             viewHolder.itemView.latest_message_tv_row.text=chatMessage.text
-             val chatPartnerId:String
-            if(chatMessage.fromId==FirebaseAuth.getInstance().uid)
-                chatPartnerId=chatMessage.toId
-            else
-                chatPartnerId=chatMessage.fromId
-
-            val ref=FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
-            ref.addListenerForSingleValueEvent(object :ValueEventListener{
-                override fun onDataChange(p0: DataSnapshot) {
-                    val user=p0.getValue(User::class.java)
-                    viewHolder.itemView.usename_latestmessage_row_tv.text=user?.username
-                    val target=viewHolder.itemView.imageView
-                    Picasso.get().load(user?.profileImageUrl).into(target)
-                 }
-                override fun onCancelled(p0: DatabaseError) {
-                }
-
-
-            })
-
-        }
-
     }
 
    //}
