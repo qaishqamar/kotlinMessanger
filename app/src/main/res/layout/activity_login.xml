@@ -5,63 +5,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8BC34A"
+    android:background="@android:color/white"
     android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/get_mobile_no_layput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/phone_no_et"
+            android:layout_width="350dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="120dp"
+            android:hint="ENTER YOUR MOBILRE NO."
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/phone_login_btn"
+            android:layout_width="173dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="52dp"
+            android:background="@android:color/holo_blue_dark"
+            android:text="get otp"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="@+id/phone_no_et"
+            app:layout_constraintStart_toStartOf="@+id/phone_no_et"
+            app:layout_constraintTop_toBottomOf="@+id/phone_no_et" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="Login throuth others"
+            app:layout_constraintEnd_toEndOf="@+id/phone_login_btn"
+            app:layout_constraintStart_toStartOf="@+id/phone_login_btn"
+            app:layout_constraintTop_toBottomOf="@+id/phone_login_btn" />
 
 
-    <EditText
-        android:id="@+id/email_et_login"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/rounded_edittext_reg_log"
-        android:ems="10"
-        android:hint="Email"
-        android:padding="15dp"
-        android:inputType="textEmailAddress"
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/get_otp_layout"
+        android:layout_width="411dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="100dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/password_et_login"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_edittext_reg_log"
-        android:ems="10"
-        android:padding="15dp"
-        android:hint="password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/email_et_login"
-        app:layout_constraintStart_toStartOf="@+id/email_et_login"
-        app:layout_constraintTop_toBottomOf="@+id/email_et_login" />
+        <EditText
+            android:id="@+id/get_otp_et"
+            android:layout_width="336dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="44dp"
+            android:hint="Enter otp"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/login_bt_login"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:text="Login"
-        android:background="@drawable/round_image_button"
-        app:layout_constraintEnd_toEndOf="@+id/password_et_login"
-        app:layout_constraintStart_toStartOf="@+id/password_et_login"
-        app:layout_constraintTop_toBottomOf="@+id/password_et_login" />
+        <Button
+            android:id="@+id/login_otp_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Login"
+            app:layout_constraintEnd_toEndOf="@+id/get_otp_et"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="@+id/get_otp_et"
+            app:layout_constraintTop_toBottomOf="@+id/get_otp_et" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/backtoRegister_tv_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="BACK TO REGISTER"
-        android:textColor="#FCFBFB"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/login_bt_login"
-        app:layout_constraintStart_toStartOf="@+id/login_bt_login"
-        app:layout_constraintTop_toBottomOf="@+id/login_bt_login" />
+
+<!--    <EditText-->
+<!--        android:id="@+id/email_et_login"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginLeft="32dp"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:layout_marginRight="32dp"-->
+<!--        android:background="@drawable/rounded_edittext_reg_log"-->
+<!--        android:ems="10"-->
+<!--        android:hint="Email"-->
+<!--        android:padding="15dp"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/password_et_login"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:background="@drawable/rounded_edittext_reg_log"-->
+<!--        android:ems="10"-->
+<!--        android:padding="15dp"-->
+<!--        android:hint="password"-->
+<!--        android:inputType="textPassword"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/email_et_login"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/email_et_login"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/email_et_login" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/login_bt_login"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Login"-->
+<!--        android:background="@drawable/round_image_button"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/password_et_login"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/password_et_login"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/password_et_login" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/backtoRegister_tv_login"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="BACK TO REGISTER"-->
+<!--        android:textColor="#FCFBFB"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/login_bt_login"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/login_bt_login"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/login_bt_login" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

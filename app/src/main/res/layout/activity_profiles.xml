@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profiles">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userPic_profile"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@android:color/white"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/profile_pic" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="265dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="40dp"
+        android:paddingLeft="5dp"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="@+id/userPic_profile"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/userPic_profile"
+        app:layout_constraintTop_toBottomOf="@+id/userPic_profile" />
+
+    <TextView
+        android:id="@+id/userName_profille"
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:padding="5dp"
+        android:text="Qamar Anwar"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <View
+        android:id="@+id/name_barrier"
+        android:layout_width="415dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="@+id/userName_profille"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="@+id/userName_profille"
+        app:layout_constraintTop_toBottomOf="@+id/userName_profille" />
+
+    <TextView
+        android:id="@+id/email_id_pro_i"
+        android:layout_width="265dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="5dp"
+        android:text="Email"
+        app:layout_constraintEnd_toEndOf="@+id/name_barrier"
+        app:layout_constraintHorizontal_bias="0.306"
+        app:layout_constraintStart_toStartOf="@+id/name_barrier"
+        app:layout_constraintTop_toBottomOf="@+id/name_barrier" />
+
+    <TextView
+        android:id="@+id/email_id_profile"
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:paddingLeft="5dp"
+        android:paddingEnd="5dp"
+        android:text="jhgelwug"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/email_id_pro_i"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/email_id_pro_i"
+        app:layout_constraintTop_toBottomOf="@+id/email_id_pro_i" />
+
+    <View
+        android:id="@+id/email_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="@+id/email_id_profile"
+        app:layout_constraintHorizontal_bias="0.624"
+        app:layout_constraintStart_toStartOf="@+id/email_id_profile"
+        app:layout_constraintTop_toBottomOf="@+id/email_id_profile" />
+
+    <TextView
+        android:id="@+id/about_pro_i"
+        android:layout_width="265dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="5dp"
+        android:paddingEnd="5dp"
+        android:text="About"
+        app:layout_constraintEnd_toEndOf="@+id/email_barrier"
+        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintStart_toStartOf="@+id/email_barrier"
+        app:layout_constraintTop_toBottomOf="@+id/email_barrier" />
+
+    <TextView
+        android:id="@+id/about_profile"
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:text="A good listenner"
+        android:paddingLeft="5dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/about_pro_i"
+        app:layout_constraintHorizontal_bias="0.202"
+        app:layout_constraintStart_toStartOf="@+id/about_pro_i"
+        app:layout_constraintTop_toBottomOf="@+id/about_pro_i" />
+
+    <!--    <TextView-->
+<!--        android:id="@+id/about_pro_i"-->
+<!--        android:layout_width="268dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:paddingLeft="5dp"-->
+<!--        android:text="About"-->
+
+<!--        app:layout_constraintEnd_toEndOf="@+id/email_barrier"-->
+<!--        app:layout_constraintHorizontal_bias="0.223"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/email_barrier"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/email_barrier" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/about_profile"-->
+<!--        android:layout_width="269dp"-->
+<!--        android:layout_height="37dp"-->
+<!--        android:inputType="textMultiLine"-->
+<!--        android:paddingLeft="5dp"-->
+<!--        android:paddingEnd="5dp"-->
+<!--        android:text="TextView"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/about_pro_i"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/about_pro_i"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/about_pro_i" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

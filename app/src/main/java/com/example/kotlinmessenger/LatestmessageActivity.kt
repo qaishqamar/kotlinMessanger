@@ -1,34 +1,46 @@
 package com.example.kotlinmessenger
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.kotlinmessenger.Models.ChatMessage
 import com.example.kotlinmessenger.Models.User
 import com.example.kotlinmessenger.NewMessageActivity.Companion.USER_KEY
-import com.example.kotlinmessenger.RegisterLogin.RegistrationActivity
+import com.example.kotlinmessenger.RegisterLogin.LoginActivity
+import com.example.kotlinmessenger.RegisterLogin.UserResistration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_latestmessage.*
-import kotlinx.android.synthetic.main.latestmessage_row.view.*
+import kotlinx.android.synthetic.main.new_placeholder.view.*
 
 class LatestmessageActivity : AppCompatActivity() {
  companion object{
      var currentUser: User?=null
+   //  val USER_KEY="user key"
+     val PROF_USER_KEY="pro user key"
+
  }
+
+
     val adapter=GroupAdapter<GroupieViewHolder>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latestmessage)
         supportActionBar?.title = currentUser?.username
+
+
         VerifyUser()
         recyclreView_latestMessage.adapter=adapter
         recyclreView_latestMessage.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
@@ -40,13 +52,27 @@ class LatestmessageActivity : AppCompatActivity() {
             intent.putExtra(USER_KEY,row.chatPartnerUser)
             startActivity(intent)
         }
+        goto_resistration.setOnClickListener {
+            val intent=Intent(this,UserResistration::class.java)
+            startActivity(intent)
+        }
+
+
        // setDummyData()
         listenForLatestMessage()
+        // for shimeractivity
+        shimmerLayout_latest.startShimmerAnimation()
     }
+
+
+
+
+
     val latesMessagesMap=HashMap<String,ChatMessage>()
     fun refresRecyclerView(){
         adapter.clear()
         latesMessagesMap.values.forEach{
+
             adapter.add(LatestMessageRow(it))
         }
 
@@ -59,6 +85,11 @@ class LatestmessageActivity : AppCompatActivity() {
                 val chatMessage=p0.getValue(ChatMessage::class.java)?:return
                 latesMessagesMap[p0.key!!]=chatMessage
                 refresRecyclerView()
+                Handler().postDelayed({
+                    shimmerLayout_latest.stopShimmerAnimation()
+                    shimmerLayout_latest.visibility= View.GONE
+                },50)
+
             }
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
                 val chatMessage=p0.getValue(ChatMessage::class.java)?:return
@@ -69,10 +100,9 @@ class LatestmessageActivity : AppCompatActivity() {
 
             }
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
             override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
         })
     }
@@ -100,7 +130,7 @@ class LatestmessageActivity : AppCompatActivity() {
         if(uid==null)
         {
             val intent=Intent(this,
-                RegistrationActivity::class.java)
+                LoginActivity::class.java)
             intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
@@ -108,10 +138,16 @@ class LatestmessageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
+            R.id.curent_user_profile->{
+                val intent=Intent(this, Profiles::class.java)
+                intent.putExtra(USER_KEY, currentUser)
+                startActivity(intent)
+
+            }
             R.id.menu_sign_out->{
                 FirebaseAuth.getInstance().signOut()
                 val intent=Intent(this,
-                    RegistrationActivity::class.java)
+                   LoginActivity::class.java)
                 intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
@@ -127,4 +163,5 @@ class LatestmessageActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.nav_menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
+
 }

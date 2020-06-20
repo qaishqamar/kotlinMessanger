@@ -7,36 +7,42 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import com.example.kotlinmessenger.LatestmessageActivity
 import com.example.kotlinmessenger.Models.User
 import com.example.kotlinmessenger.R
+import com.example.kotlinmessenger.RegisterLogin.LoginActivity.Companion.phonNoStatic
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_registration.*
+import kotlinx.android.synthetic.main.activity_user_resistration.*
 import java.util.*
 
-class RegistrationActivity : AppCompatActivity() {
+class UserResistration : AppCompatActivity() {
+    lateinit var userName:EditText
+    lateinit var email: EditText
+    lateinit var aboutUser:EditText
+
+    val mAuth =FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration)
-
-        register_bt_rester.setOnClickListener {
-            performRegister()
-        }
-        alredy_have_acount_tv_register.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+        setContentView(R.layout.activity_user_resistration)
+        userName=findViewById<EditText>(R.id.userName_et_user_register)
+        email=findViewById<EditText>(R.id.email_et_user_register)
+        aboutUser=findViewById<EditText>(R.id.about_pro_i)
         SelectImage_button_register.setOnClickListener {
             Log.d("Main","Try to show photo selecter")
             val intent=Intent(Intent.ACTION_PICK)
             intent.type="image/*"
             startActivityForResult(intent,0)
         }
+        Resister_btn_userR.setOnClickListener {
+            uploadImagrToFirebase()
+        }
+
+
     }
     var selected_photo_uri: Uri? =null
 
@@ -46,40 +52,15 @@ class RegistrationActivity : AppCompatActivity() {
             //proceed and check what thee image is selected
             Log.d("Main","image is selected")
             selected_photo_uri=data.data
-            val bitmap=MediaStore.Images.Media.getBitmap(contentResolver,selected_photo_uri)
+            val bitmap= MediaStore.Images.Media.getBitmap(contentResolver,selected_photo_uri)
             select_circleImageView_register.setImageBitmap(bitmap)
             SelectImage_button_register.alpha=0f
-         //   val bitmapDrawable=BitmapDrawable(bitmap)
-         //   SelectImage_button_register.setBackgroundDrawable(bitmapDrawable)
+            //   val bitmapDrawable=BitmapDrawable(bitmap)
+            //   SelectImage_button_register.setBackgroundDrawable(bitmapDrawable)
         }
     }
 
-    private fun performRegister(){
-        val email = email_et_register.text.toString()
-        val password = password_et_register.text.toString()
-        Log.d("RegistrationActivity", "registring email: $email")
-        Log.d("RegistrationActivity", "registring password: $password")
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "enter email or password", Toast.LENGTH_SHORT).show()
-            return
-        }
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) return@addOnCompleteListener
-                // else part
-                Log.d("Main", "succesfully created user wiith id :${it.result?.user?.uid}")
-                uploadImagrToFirebase()
-
-
-            }
-            .addOnFailureListener {
-                Toast.makeText(
-                    this, "failed to create user acount:${it.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-    }
-  private fun uploadImagrToFirebase(){
+    private fun uploadImagrToFirebase(){
      val filename= UUID.randomUUID().toString()
       val ref= FirebaseStorage.getInstance().getReference("/image/$filename")
       ref.putFile(selected_photo_uri!!)
@@ -99,11 +80,13 @@ class RegistrationActivity : AppCompatActivity() {
     private fun saveUserToFirebase(profileImageUrl:String){
         val uid=FirebaseAuth.getInstance().uid?:""
         val user= User(
-            uid.toString(),
-            userName_et_register.text.toString(),
-            profileImageUrl
+            uid,
+            userName.text.toString(),
+            profileImageUrl,
+            aboutUser.text.toString(),
+            email.text.toString(),phonNoStatic
         )
-       val ref=FirebaseDatabase.getInstance().getReference("/users/$uid")
+       val ref= FirebaseDatabase.getInstance().getReference("/users/$uid")
 
         ref.setValue(user)
             .addOnSuccessListener {
@@ -121,5 +104,3 @@ class RegistrationActivity : AppCompatActivity() {
             }
     }
 }
-
-//FirebaseFirestore.getInstance().document("/users/$uid").set(user)"

@@ -1,5 +1,7 @@
 package com.example.kotlinmessenger
 
+import android.util.Log
+import com.example.kotlinmessenger.LatestmessageActivity.Companion.currentUser
 import com.example.kotlinmessenger.Models.ChatMessage
 import com.example.kotlinmessenger.Models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +16,7 @@ import kotlinx.android.synthetic.main.latestmessage_row.view.*
 
 class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>(){
     var chatPartnerUser:User?=null
+
     override fun getLayout(): Int {
         return R.layout.latestmessage_row
     }
@@ -21,24 +24,28 @@ class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>(){
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.latest_message_tv_row.text=chatMessage.text
         val chatPartnerId:String
-        if(chatMessage.fromId== FirebaseAuth.getInstance().uid)
-            chatPartnerId=chatMessage.toId
-        else
-            chatPartnerId=chatMessage.fromId
+        if(chatMessage.id!=currentUser?.uid) {
+            if (chatMessage.fromId == FirebaseAuth.getInstance().uid)
+                chatPartnerId = chatMessage.toId
+            else
+                chatPartnerId = chatMessage.fromId
 
-        val ref= FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                chatPartnerUser=p0.getValue(User::class.java)
-                viewHolder.itemView.usename_latestmessage_row_tv.text=chatPartnerUser?.username
-                val target=viewHolder.itemView.imageView
-                Picasso.get().load(chatPartnerUser?.profileImageUrl).into(target)
-            }
-            override fun onCancelled(p0: DatabaseError) {
-            }
+            val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot) {
+                    chatPartnerUser = p0.getValue(User::class.java)
+                    viewHolder.itemView.usename_latestmessage_row_tv.text =
+                        chatPartnerUser?.username
+                    val target = viewHolder.itemView.imageView
+                    Picasso.get().load(chatPartnerUser?.profileImageUrl).into(target)
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                }
 
 
-        })
+            })
+        }
 
     }
 

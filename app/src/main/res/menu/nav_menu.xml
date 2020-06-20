@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item android:title="user"
+        android:icon="@drawable/profile_pic"
+          android:id="@+id/curent_user_profile"
+
+          app:showAsAction="always"/>
+
     <item android:title="New users"
         android:id="@+id/menu_new_user"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item android:title="Sign Out"
         android:id="@+id/menu_sign_out"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
 </menu>

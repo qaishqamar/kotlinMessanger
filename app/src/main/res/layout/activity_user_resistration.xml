@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kotlinmessenger.RegisterLogin.UserResistration">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/SelectImage_button_register"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="68dp"
+            android:background="@drawable/profile_pic"
+            android:text="Select Image"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.455"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/select_circleImageView_register"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp"
+            app:layout_constraintEnd_toEndOf="@+id/SelectImage_button_register"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/SelectImage_button_register"
+            app:layout_constraintTop_toTopOf="@+id/SelectImage_button_register" />
+
+        <EditText
+            android:id="@+id/userName_et_user_register"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_edittext_reg_log"
+            android:ems="10"
+            android:hint="User name"
+            android:inputType="textPersonName"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/SelectImage_button_register"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/SelectImage_button_register"
+            app:layout_constraintTop_toBottomOf="@+id/SelectImage_button_register" />
+
+        <EditText
+            android:id="@+id/email_et_user_register"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edittext_reg_log"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/userName_et_user_register"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/userName_et_user_register"
+            app:layout_constraintTop_toBottomOf="@+id/userName_et_user_register" />
+
+        <EditText
+            android:id="@+id/about_pro_i"
+            android:layout_width="346dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="20dp"
+            android:hint="tell something about yourself"
+            android:inputType="textPersonName"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/email_et_user_register"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/email_et_user_register"
+            app:layout_constraintTop_toBottomOf="@+id/email_et_user_register" />
+
+        <Button
+            android:id="@+id/Resister_btn_userR"
+            android:layout_width="143dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="60dp"
+            android:text="Submit"
+            app:layout_constraintEnd_toEndOf="@+id/about_pro_i"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="@+id/about_pro_i"
+            app:layout_constraintTop_toBottomOf="@+id/about_pro_i" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

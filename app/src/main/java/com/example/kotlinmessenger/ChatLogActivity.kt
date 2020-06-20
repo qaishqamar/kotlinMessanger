@@ -1,10 +1,14 @@
 package com.example.kotlinmessenger
 
 //import android.support.v7.app.AppCompatActivity
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kotlinmessenger.LatestmessageActivity.Companion.currentUser
 import com.example.kotlinmessenger.Models.ChatMessage
+
 import com.example.kotlinmessenger.Models.User
 
 import com.xwray.groupie.GroupAdapter
@@ -17,15 +21,29 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
+
 
 
 class ChatLogActivity : AppCompatActivity() {
 companion object{
    val tag="chatlog"
+    val TABLE_NAME = "Chatdata"
+     var COLUMN_USER_ID="si"
+
+    val CHAT_MSG = "chatmsg"
+    val TIME="time"
+    val DATABASE_VERSION=1
+    val DATABASE_NAME  ="mychatDb"
+    val FIRST_P_ID="senderid"
+    val SECOND_P_ID="reciverid"
+
+
 }
+
+//    lateinit var dbhandler:MyDBOpenHelper
     val adapter=GroupAdapter<GroupieViewHolder>()
     var toUser:User?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,18 +63,26 @@ companion object{
     private fun listenForMessages(){
         val fromId=FirebaseAuth.getInstance().uid
         val toId=toUser?.uid
+      //  dbhandler= MyDBOpenHelper(this@ChatLogActivity)
         val ref=FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
         ref.addChildEventListener(object :ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage=p0.getValue(ChatMessage::class.java)
+
+
                 if(chatMessage!=null) {
                     if(chatMessage.fromId==FirebaseAuth.getInstance().uid) {
                         Log.d(tag, chatMessage.text)
                         val currentUser=LatestmessageActivity.currentUser
+
+
+                            //dbhandler.insertData(chatMessage,this@ChatLogActivity)
+
                         adapter.add(ChatFromItem(chatMessage.text,currentUser!!))
                     }
                     else{
 
+                      //  dbhandler.insertData(chatMessage,this@ChatLogActivity)
                         adapter.add(ChatToItem(chatMessage.text,toUser!!))
 
                     }
@@ -91,7 +117,7 @@ companion object{
         val text=edittext_chat_log.text.toString()
         if(fromId==null)return
 
-       //  val reference=FirebaseDatabase.getInstance().getReference("/message").push()
+        //  val reference=FirebaseDatabase.getInstance().getReference("/message").push()
         val reference=FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
 
         val toReference=FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
@@ -115,7 +141,10 @@ companion object{
 class ChatFromItem(val text:String,val user: User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
      viewHolder.itemView.textView_from_chat.text=text
-     Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.imageView_From_Chat)
+        val firstFchar:Char=user.username.get(0)
+     //viewHolder.itemView.user_name_from_chat.text=firstFchar.toString()
+        val trimName=user.username.trim()
+       // viewHolder.itemView.user_from_chat.text=trimName.toLowerCase()
     }
 
     override fun getLayout(): Int {
@@ -126,12 +155,12 @@ class ChatFromItem(val text:String,val user: User): Item<GroupieViewHolder>() {
 class ChatToItem(val text: String,val user:User): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
      viewHolder.itemView.textView_to_chat.text=text
-     val  uri= user.profileImageUrl
-     val targetImageView=viewHolder.itemView.imageView_To_Chat
-     Picasso.get().load(uri).into(targetImageView)
+      val firstTochar:Char=user.username.get(0)
+    // viewHolder.itemView.user_name_to_chat.text=firstTochar.toString()
     }
 
     override fun getLayout(): Int {
         return R.layout.chat_to_row
     }
 }
+

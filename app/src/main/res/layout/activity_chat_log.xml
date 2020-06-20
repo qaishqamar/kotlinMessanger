@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChatLogActivity"
-    android:background="@android:color/white">
+    android:background="@drawable/chatback">
 
     <EditText
         android:id="@+id/edittext_chat_log"
@@ -18,8 +18,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
+        android:paddingLeft="8dp"
         android:hint="Enter Message"
-        android:background="@android:color/white"
+        android:background="@drawable/rounded_edittext_reg_log"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/send_button_chat_log"
@@ -45,7 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:color/holo_green_light"
+
         app:layout_constraintBottom_toTopOf="@+id/edittext_chat_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
