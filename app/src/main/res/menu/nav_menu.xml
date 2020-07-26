@@ -2,11 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-    <item android:title="user"
-        android:icon="@drawable/profile_pic"
+    <item android:title="User Profile"
           android:id="@+id/curent_user_profile"
-
-          app:showAsAction="always"/>
+          app:showAsAction="collapseActionView"/>
 
     <item android:title="New users"
         android:id="@+id/menu_new_user"
@@ -14,6 +12,9 @@
 
     <item android:title="Sign Out"
         android:id="@+id/menu_sign_out"
-        app:showAsAction="always"/>
+        app:showAsAction="collapseActionView"/>
+    <item android:title="Edit profile"
+        android:id="@+id/edit_profile_menu"
+        app:showAsAction="collapseActionView"/>
 
 </menu>

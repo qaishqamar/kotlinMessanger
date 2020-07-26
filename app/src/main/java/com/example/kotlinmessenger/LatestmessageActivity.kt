@@ -52,10 +52,10 @@ class LatestmessageActivity : AppCompatActivity() {
             intent.putExtra(USER_KEY,row.chatPartnerUser)
             startActivity(intent)
         }
-        goto_resistration.setOnClickListener {
-            val intent=Intent(this,UserResistration::class.java)
-            startActivity(intent)
-        }
+//        goto_resistration.setOnClickListener {
+//            val intent=Intent(this,UserResistration::class.java)
+//            startActivity(intent)
+//        }
 
 
        // setDummyData()
@@ -83,6 +83,10 @@ class LatestmessageActivity : AppCompatActivity() {
         ref.addChildEventListener(object:ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chatMessage=p0.getValue(ChatMessage::class.java)?:return
+                if (chatMessage==null){
+                    Toast.makeText(this@LatestmessageActivity,"you dont have any message" +
+                            "goto Newmessage activity and text your friends",Toast.LENGTH_LONG).show()
+                }
                 latesMessagesMap[p0.key!!]=chatMessage
                 refresRecyclerView()
                 Handler().postDelayed({
@@ -104,6 +108,7 @@ class LatestmessageActivity : AppCompatActivity() {
             override fun onChildRemoved(p0: DataSnapshot) {
 
             }
+
         })
     }
 
@@ -153,6 +158,10 @@ class LatestmessageActivity : AppCompatActivity() {
             }
             R.id.menu_new_user->{
                 val intent=Intent(this,NewMessageActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.edit_profile_menu->{
+                val intent=Intent(this,UserResistration::class.java)
                 startActivity(intent)
             }
         }

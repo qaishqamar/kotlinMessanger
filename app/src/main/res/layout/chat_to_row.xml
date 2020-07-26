@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="right"
     android:paddingLeft="50dp"
-    android:paddingRight="10dp"
-    >
+    android:paddingRight="10dp">
+
+
+    <ImageView
+        android:id="@+id/chat_im_view"
+        android:layout_width="21dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/trainglerhs"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_to_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/chatright"
         android:maxWidth="240dp"
-        android:paddingRight="15dp"
-        android:paddingEnd="18dp"
         android:padding="10dp"
-
-        android:text="This is my message that will wrap into multiple lines and keep on going" app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingEnd="18dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="8dp"
+        android:text="This is my message that will wrap into multiple lines and keep on going"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/chat_im_view"
         app:layout_constraintTop_toTopOf="parent"
-       />
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

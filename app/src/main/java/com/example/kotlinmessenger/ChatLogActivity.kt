@@ -1,11 +1,19 @@
 package com.example.kotlinmessenger
 
 //import android.support.v7.app.AppCompatActivity
+import android.app.Application
+import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
+import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinmessenger.LatestmessageActivity.Companion.currentUser
 import com.example.kotlinmessenger.Models.ChatMessage
 
@@ -24,10 +32,10 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
+import kotlinx.android.synthetic.main.delete_toast_layout.*
 
 
-
-class ChatLogActivity : AppCompatActivity() {
+open class ChatLogActivity : AppCompatActivity() {
 companion object{
    val tag="chatlog"
     val TABLE_NAME = "Chatdata"
@@ -54,10 +62,19 @@ companion object{
         toUser=intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         supportActionBar?.title = toUser?.username
 
+        
         listenForMessages()
         send_button_chat_log.setOnClickListener {
             Log.d(tag,"send button clicked")
-            performSendMessage()
+            val etext=edittext_chat_log.text.toString()
+            if(TextUtils.isEmpty(etext)|| etext.trim().length==0) {
+                Toast.makeText(this,"text is empty! \n please insert text",Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                performSendMessage()
+
+            }
         }
     }
     private fun listenForMessages(){
@@ -78,12 +95,12 @@ companion object{
 
                             //dbhandler.insertData(chatMessage,this@ChatLogActivity)
 
-                        adapter.add(ChatFromItem(chatMessage.text,currentUser!!))
+                        adapter.add(ChatFromItem(chatMessage.text,currentUser!!,this@ChatLogActivity))
                     }
                     else{
 
                       //  dbhandler.insertData(chatMessage,this@ChatLogActivity)
-                        adapter.add(ChatToItem(chatMessage.text,toUser!!))
+                        adapter.add(ChatToItem(chatMessage.text,toUser!!,this@ChatLogActivity))
 
                     }
                 }
@@ -136,15 +153,27 @@ companion object{
          latestMessageToRef.setValue(message)
     }
 
+//   public fun  customToastshow(){
+//
+//    }
+
 }
 
-class ChatFromItem(val text:String,val user: User): Item<GroupieViewHolder>() {
+class ChatFromItem(val text:String,val user: User,val context: Context): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
      viewHolder.itemView.textView_from_chat.text=text
         val firstFchar:Char=user.username.get(0)
      //viewHolder.itemView.user_name_from_chat.text=firstFchar.toString()
         val trimName=user.username.trim()
        // viewHolder.itemView.user_from_chat.text=trimName.toLowerCase()
+       val showtoast:ShowToast=ShowToast(viewHolder.itemView.textView_from_chat,context)
+
+        viewHolder.itemView.textView_from_chat.setOnLongClickListener {
+
+           showtoast.showPopup()
+
+               true
+        }
     }
 
     override fun getLayout(): Int {
@@ -152,10 +181,16 @@ class ChatFromItem(val text:String,val user: User): Item<GroupieViewHolder>() {
     }
 }
 
-class ChatToItem(val text: String,val user:User): Item<GroupieViewHolder>() {
+class ChatToItem(val text: String,val user:User,val context: Context): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
      viewHolder.itemView.textView_to_chat.text=text
       val firstTochar:Char=user.username.get(0)
+        val obj= ShowToast(viewHolder.itemView.textView_to_chat,context)
+        viewHolder.itemView.setOnLongClickListener {
+            obj.showPopup()
+         true
+        }
+
     // viewHolder.itemView.user_name_to_chat.text=firstTochar.toString()
     }
 

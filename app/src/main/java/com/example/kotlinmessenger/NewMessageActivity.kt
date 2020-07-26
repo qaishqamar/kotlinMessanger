@@ -36,7 +36,7 @@ import kotlin.coroutines.coroutineContext
 
 class NewMessageActivity : AppCompatActivity() {
    lateinit var cursor:Cursor
-     val contacts= arrayOf<ContactClass>()
+     val contacts= ArrayList<ContactClass>()
     val READ_PHONE_PERMISSION_CODE=1
 
    val latestmessageObj=LatestmessageActivity()
@@ -79,6 +79,7 @@ class NewMessageActivity : AppCompatActivity() {
                 if (grantResults.size>=0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(this,"permission granted",Toast.LENGTH_SHORT).show()
                     readContact()
+                    Log.d("phone no","Contact no:- trying to reed contacts")
                 }
                 else
                 {
@@ -92,18 +93,23 @@ class NewMessageActivity : AppCompatActivity() {
 
 
      fun readContact() {
+         Log.d("phone no","Contact no:- started read fun contacts")
       cursor=contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null)
 
          var i=0
-
+         Log.d("phone no","Contact no:- cursure created")
         while (cursor.moveToNext()){
-
+            Log.d("phone no","Contact no:- trying to read contacts while")
             val phoneNumber=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
             val MnoName=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
             val contactobj=ContactClass(phoneNumber,MnoName)
-           // contacts[i]=contactobj
-            Log.d("phone no","no:- $phoneNumber")
-            Log.d("phone no","Name -$MnoName")
+//            contactobj.Mno=phoneNumber
+//            contactobj.Mname=MnoName
+
+            Log.d("phone no","Contact no:- $phoneNumber")
+            contacts.add(contactobj)
+            Log.d("phone no","freinds Name -$MnoName")
+
             i++
         }
          cursor.close()
@@ -112,12 +118,31 @@ class NewMessageActivity : AppCompatActivity() {
     companion object {
         val USER_KEY = "USER_KEY"
     }
-    fun checkNo( userd:User){
-       //val contactlistsobj=contacts<ContactClass>()
+    fun checkNo( userd:User):Int{
+        var result=0
+       // contactlistsobj=contacts<ContactClass>()
+        Log.d("cheklist","check fun initiated")
+        val userMno=userd.phoneNo.replace("\\s".toRegex(),"")
+       var No=""
         if (contacts!=null) {
-            for ((index, i) in contacts.withIndex()) {
-//            if(contacts[index].Mno==)
-                Log.d("list no", "No ${contacts[index]}")
+
+            Log.d("cheklist","array is not null ${userd.phoneNo}")
+
+            for (i in 0..contacts.size-1){
+                val num=contacts[i].Mno.replace("\\s".toRegex(),"")
+                if (num.length==10) {
+                    No = "+91"+num
+                }
+                else
+                {
+                    No=num
+                }
+
+                Log.d("cheklist", " travesing array trim no $No}")
+                if(No==userMno) {
+                    Log.d("cheklistMatch", " matched no ${contacts[i].Mno}")
+                    result++
+                }
 
             }
         }
@@ -125,6 +150,7 @@ class NewMessageActivity : AppCompatActivity() {
         {
             Toast.makeText(this,"array is empty",Toast.LENGTH_SHORT).show()
         }
+        return result
     }
 
     private fun fetchUsers() {
@@ -139,14 +165,17 @@ class NewMessageActivity : AppCompatActivity() {
                     Log.d("NewMessage", it.toString())
                     val user = it.getValue(User::class.java)
 
-                    if (user != null&&user.uid!=curentUserUid) {
-                       // checkNo(user)
-                        adapter.add(UserItem(user,this@NewMessageActivity))
-                        Handler().postDelayed({
-                            shimmerLayout.stopShimmerAnimation()
-                            shimmerLayout.visibility=View.GONE
 
-                        },10)
+                    if (user != null&&user.uid!=curentUserUid) {
+                        val res:Int= checkNo(user)
+                        if(res>0) {
+                            adapter.add(UserItem(user, this@NewMessageActivity))
+                            Handler().postDelayed({
+                                shimmerLayout.stopShimmerAnimation()
+                                shimmerLayout.visibility = View.GONE
+
+                            }, 10)
+                        }
                     }
                 }
 
