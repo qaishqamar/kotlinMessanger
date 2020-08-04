@@ -161,8 +161,9 @@ class LatestmessageActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.edit_profile_menu->{
-                val intent=Intent(this,UserResistration::class.java)
+               val intent=Intent(this,UserResistration::class.java)
                 startActivity(intent)
+//                Toast.makeText(this,"this menu item is only for testing purpose",Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)

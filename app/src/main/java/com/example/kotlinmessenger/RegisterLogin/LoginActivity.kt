@@ -44,7 +44,7 @@ class LoginActivity:AppCompatActivity(){
 
         }
         login_otp_btn.setOnClickListener {
-            authenticate()
+           authenticate()
         }
 
 
@@ -73,7 +73,7 @@ class LoginActivity:AppCompatActivity(){
 
              override fun onCodeSent(verification: String, p1: PhoneAuthProvider.ForceResendingToken) {
                  super.onCodeSent(verification, p1)
-                 verificationId=verificationCallback().toString()
+                 verificationId=verification
                 get_mobile_no_layput.visibility= android.view.View.GONE
 //
               get_otp_layout.visibility=android.view.View.VISIBLE
@@ -118,7 +118,10 @@ class LoginActivity:AppCompatActivity(){
     fun authenticate(){
         val verifiNo=get_otp_et.text.toString()
         val credential:PhoneAuthCredential=PhoneAuthProvider.getCredential(verificationId,verifiNo)
-        signInWithPhoneAuthCredential(credential)
+
+            signInWithPhoneAuthCredential(credential)
+
+
     }
     //
 
@@ -143,3 +146,9 @@ class LoginActivity:AppCompatActivity(){
 //         }
 //    }
 }
+
+
+
+
+
+

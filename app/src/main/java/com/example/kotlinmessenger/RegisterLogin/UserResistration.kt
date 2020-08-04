@@ -48,7 +48,7 @@ class UserResistration : AppCompatActivity() {
             startActivityForResult(intent,0)
         }
         Resister_btn_userR.setOnClickListener {
-            if (userName.text.trim().length>0||email.text.trim().length>0) {
+            if (userName.text.trim().length>0&&email.text.trim().length>0&&selected_photo_uri!=null) {
                 layout.visibility = View.GONE
                 surf_rest.visibility = View.VISIBLE
                 val animat: Animation = AnimationUtils.loadAnimation(this, R.anim.surf_rotet)
@@ -58,7 +58,7 @@ class UserResistration : AppCompatActivity() {
             }
             else
             {
-                Toast.makeText(this,"insert name and email properly",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"insert name,pic and email properly ",Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -134,8 +134,7 @@ class UserResistration : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("Main","user detail is uploaded")
-                val intent=Intent(this,
-                    LatestmessageActivity::class.java)
+                val intent=Intent(this, LatestmessageActivity::class.java)
                 intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }

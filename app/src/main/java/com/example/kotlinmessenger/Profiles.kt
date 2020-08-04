@@ -1,9 +1,7 @@
 package com.example.kotlinmessenger
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.hardware.input.InputManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,8 +16,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profiles.*
-import kotlinx.android.synthetic.main.activity_user_resistration.*
-import kotlinx.android.synthetic.main.user_row_newmessage.view.*
 import java.util.*
 
 class Profiles : AppCompatActivity() {
@@ -108,15 +104,15 @@ class Profiles : AppCompatActivity() {
 
     }
 
-    var selected_photo_uri: Uri? = null
+    var selectedPhotoUri: Uri? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             //proceed and check what thee image is selected
             Log.d("Main", "image is selected")
-            selected_photo_uri = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selected_photo_uri)
+            selectedPhotoUri = data.data
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
             userPic_profile.setImageBitmap(bitmap)
            // SelectImage_button_register.alpha = 0f
             //   val bitmapDrawable=BitmapDrawable(bitmap)
@@ -147,7 +143,7 @@ class Profiles : AppCompatActivity() {
     private fun uploadImagrToFirebase() {
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/image/$filename")
-        ref.putFile(selected_photo_uri!!)
+        ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
                 Log.d("Main", "image is uploaded sucessfully ${it.metadata?.path}")
                 ref.downloadUrl.addOnSuccessListener {
